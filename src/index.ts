@@ -12,26 +12,26 @@ export const AucoSDK: TAucoSDK = params => {
   setupEvents(params);
 };
 
-AucoSDK({
-  iframeId: 'myIframe',
-  keyPublic: '',
-  language: 'es',
-  sdkType: 'upload',
-  events: {
-    onSDKClose: () => {},
-    onSDKReady: () => {},
-  },
-  sdkData: {
-    userAttributes: {
-      email: '',
-      firstName: '',
-      lastName: '',
-    },
-  },
-});
+// AucoSDK({
+//   iframeId: 'myIframe',
+//   keyPublic: '',
+//   language: 'es',
+//   sdkType: 'upload',
+//   events: {
+//     onSDKClose: () => {},
+//     onSDKReady: () => {},
+//   },
+//   sdkData: {
+//     userAttributes: {
+//       email: '',
+//       firstName: '',
+//       lastName: '',
+//     },
+//   },
+// });
 const parametersValidation = (params: Config) => {
-  if(!params.iframeId){
-    throw new Error("Could not start SDK, iframeID is missing");
+  if (!params.iframeId) {
+    throw new Error('Could not start SDK, iframeID is missing');
   }
   if (!['es', 'en'].includes(params?.language)) {
     throw new Error(
@@ -56,7 +56,7 @@ const setupEvents = (params: Config) => {
     );
   }
   function onMessage(event: MessageEvent) {
-    if (event.origin != origin) return;
+    if (event.origin !== origin) return;
     if (event.data.ready) {
       iframe!.contentWindow?.postMessage({ language, ...sdkData }, origin);
       return;
@@ -71,7 +71,7 @@ const setupEvents = (params: Config) => {
       const token = events.onSDKToken();
       iframe!.contentWindow?.postMessage({ type: 'token', token }, origin);
     }
-    if (event.data.type == 'SDK-CLOSE') {
+    if (event.data.type === 'SDK-CLOSE') {
       events.onSDKClose();
       window.removeEventListener('message', onMessage);
     }
