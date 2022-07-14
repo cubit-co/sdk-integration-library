@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -31,7 +31,7 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "sdk-library",
+  "name": "auco-sdk-integration",
   "author": "Andres Calvo Ariza",
   "module": "dist/sdk-library.esm.js",
   "size-limit": [
@@ -44,6 +44,10 @@
       "limit": "10 KB"
     }
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andres-calvo/sdk-integration-library.git"
+  },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^7.0.8",
     "husky": "^8.0.1",

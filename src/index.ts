@@ -31,24 +31,17 @@ export const AucoSDK: TAucoSDK = params => {
 // });
 const parametersValidation = (params: Config) => {
   if (!params.iframeId) {
-    throw new Error('Could not start SDK, iframeID is missing');
+    throw new Error('Could not start SDK, iframeId is missing');
   }
   if (!['es', 'en'].includes(params?.language)) {
     throw new Error(
       "Could not start SDK, language is missing or invalid, available options are 'es' and 'en' "
     );
   }
-  // const validCountry =
-  //   params?.country.length > 1 &&
-  //   params?.country.length <= 3 &&
-  //   new RegExp(/\+[0-9]{1,3}/).test(params?.country);
-  // if (!validCountry) {
-  //   throw new Error('Could not start SDK, invalid country, country is the country dial code, for example +57 for Colombia');
-  // }
 };
 const setupEvents = (params: Config) => {
   const { iframeId, events, language, sdkData } = params;
-  const origin = '';
+  const origin = 'https://sdk-upload-doc.vercel.app';
   const iframe = document.getElementById(iframeId) as HTMLIFrameElement;
   if (!iframe) {
     throw new Error(
