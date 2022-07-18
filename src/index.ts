@@ -30,11 +30,11 @@ const setupEvents = (params: Config) => {
       `Could not start SDK, Iframe with id: ${iframeId} not found`
     );
   }
-  function onMessage(event: MessageEvent) {
+  async function onMessage(event: MessageEvent) {
     if (event.origin !== origin) return;
     if (event.data.ready) {
       iframe!.contentWindow?.postMessage({ language, ...sdkData }, origin);
-      events.onSDKReady();
+      await events.onSDKReady();
       return;
     }
     if (event.data.type.includes('token')) {
@@ -44,11 +44,11 @@ const setupEvents = (params: Config) => {
           "Could not get token, SDK is asking for user token, but there isn't a onSDKToken function provided"
         );
       }
-      const token = events.onSDKToken();
+      const token = await events.onSDKToken();
       iframe!.contentWindow?.postMessage({ type: 'token', token }, origin);
     }
     if (event.data.type === 'SDK-CLOSE') {
-      events.onSDKClose();
+      await events.onSDKClose();
       window.removeEventListener('message', onMessage);
     }
     if (event.data) {
