@@ -46,13 +46,21 @@ interface SDKSign extends BaseConfig {
    */
   sdkType: 'sign';
   sdkData: {
-    image: string;
-    name: string;
+    /**
+     * Document Id , also known as code
+     */
+    document: string;
+    image?: string;
+    name?: string;
     uxOptions: {
       primaryColor: string;
+      alternateColor: string;
       redirectUrl: string;
+      hoverColor?: string;
+      icons?: {
+        gradient: string[];
+      };
     };
-    document: string;
   };
 }
 interface SDKValidation extends BaseConfig {
