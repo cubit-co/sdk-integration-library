@@ -6,7 +6,7 @@ export type SDKTypeObjectKeys = {
 export type SDKEvents = {
   onSDKReady: () => void;
   onSDKClose: () => void;
-  onSDKToken?: () => string;
+  onSDKToken?: () => Promise<string>;
 };
 interface BaseConfig {
   keyPublic?: string;

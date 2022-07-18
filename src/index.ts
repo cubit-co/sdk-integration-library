@@ -1,4 +1,4 @@
-import { TAucoSDK, Config, SDKTypeObjectKeys } from './types';
+import { TAucoSDK, Config, SDKTypeObjectKeys, SDKs } from './types';
 
 export const AucoSDK: TAucoSDK = params => {
   parametersValidation(params);
@@ -33,12 +33,14 @@ const setupEvents = (params: Config) => {
   async function onMessage(event: MessageEvent) {
     if (event.origin !== origin) return;
     if (event.data.ready) {
-      iframe!.contentWindow?.postMessage({ language, ...sdkData }, origin);
+      iframe!.contentWindow?.postMessage(
+        { language, ...sdkData, ...getExtraConstants(params.sdkType) },
+        origin
+      );
       await events.onSDKReady();
       return;
     }
     if (event.data.type.includes('token')) {
-      console.log('Recibí evento token del sdk', event);
       if (!events.onSDKToken) {
         throw new Error(
           "Could not get token, SDK is asking for user token, but there isn't a onSDKToken function provided"
@@ -51,9 +53,6 @@ const setupEvents = (params: Config) => {
       await events.onSDKClose();
       window.removeEventListener('message', onMessage);
     }
-    if (event.data) {
-      console.log('Respuesta final del iframe', event);
-    }
   }
   window.addEventListener('message', onMessage);
   iframe.src = origin;
@@ -64,4 +63,14 @@ const getSDKURL: SDKTypeObjectKeys = {
   sign: 'https://sign.auco.ai',
   attachments: 'https://upload.auco.ai',
   validation: '',
+};
+const getExtraConstants = (type: SDKs) => {
+  let extraConstants = new Map();
+  if (type == 'upload' || type == 'attachments') {
+    extraConstants.set(
+      'flowType',
+      type == 'upload' ? 'upload-document' : 'add-documents'
+    );
+  }
+  return Object.fromEntries(extraConstants);
 };
