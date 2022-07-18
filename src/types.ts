@@ -1,5 +1,8 @@
 export type Languages = 'es' | 'en';
 export type SDKs = 'upload' | 'attachments' | 'validation' | 'sign';
+export type SDKTypeObjectKeys = {
+  [x in SDKs]: string;
+};
 export type SDKEvents = {
   onSDKReady: () => void;
   onSDKClose: () => void;
@@ -11,11 +14,11 @@ interface BaseConfig {
   iframeId: string;
   language: Languages;
   events: SDKEvents;
+  customOrigin?: string;
 }
 interface SDKUploadData {
   userAttributes: {
-    firstName: string;
-    lastName: string;
+    name: string;
     email: string;
     phone?: string;
     identification?: string;

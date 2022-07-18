@@ -1,34 +1,12 @@
-import { TAucoSDK, Config } from './types';
-
-export const sum = (a: number, b: number) => {
-  if ('development' === process.env.NODE_ENV) {
-    console.log('boop');
-  }
-  return a + b;
-};
+import { TAucoSDK, Config, SDKTypeObjectKeys } from './types';
 
 export const AucoSDK: TAucoSDK = params => {
   parametersValidation(params);
-  setupEvents(params);
+  const messageFunc = setupEvents(params);
+  const unsuscribe = () => window.removeEventListener('message', messageFunc);
+  return unsuscribe;
 };
 
-// AucoSDK({
-//   iframeId: 'myIframe',
-//   keyPublic: '',
-//   language: 'es',
-//   sdkType: 'upload',
-//   events: {
-//     onSDKClose: () => {},
-//     onSDKReady: () => {},
-//   },
-//   sdkData: {
-//     userAttributes: {
-//       email: '',
-//       firstName: '',
-//       lastName: '',
-//     },
-//   },
-// });
 const parametersValidation = (params: Config) => {
   if (!params.iframeId) {
     throw new Error('Could not start SDK, iframeId is missing');
@@ -41,7 +19,9 @@ const parametersValidation = (params: Config) => {
 };
 const setupEvents = (params: Config) => {
   const { iframeId, events, language, sdkData } = params;
-  const origin = 'https://sdk-upload-doc.vercel.app';
+  const origin = params.customOrigin
+    ? params.customOrigin
+    : getSDKURL[params.sdkType];
   const iframe = document.getElementById(iframeId) as HTMLIFrameElement;
   if (!iframe) {
     throw new Error(
@@ -74,4 +54,11 @@ const setupEvents = (params: Config) => {
   }
   window.addEventListener('message', onMessage);
   iframe.src = origin;
+  return onMessage;
+};
+const getSDKURL: SDKTypeObjectKeys = {
+  upload: 'https://upload.auco.ai',
+  sign: 'https://sign.auco.ai',
+  attachments: 'https://upload.auco.ai',
+  validation: '',
 };
