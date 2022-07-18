@@ -55,7 +55,7 @@ interface SDKSign extends BaseConfig {
     uxOptions: {
       primaryColor: string;
       alternateColor: string;
-      redirectUrl: string;
+      redirectUrl?: string;
       hoverColor?: string;
       icons?: {
         gradient: string[];

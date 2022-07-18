@@ -32,6 +32,7 @@ const setupEvents = (params: Config) => {
     if (event.origin !== origin) return;
     if (event.data.ready) {
       iframe!.contentWindow?.postMessage({ language, ...sdkData }, origin);
+      events.onSDKReady();
       return;
     }
     if (event.data.type.includes('token')) {
