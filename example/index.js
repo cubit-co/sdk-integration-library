@@ -19,5 +19,6 @@ let config = {
 };
 window.onload = function() {
   console.log(AucoSDK);
-  AucoSDK(config);
+  const unsus = AucoSDK(config);
+  setTimeout(() => unsus(), 5000);
 };

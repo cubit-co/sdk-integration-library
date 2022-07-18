@@ -3,7 +3,9 @@ import { TAucoSDK, Config, SDKTypeObjectKeys } from './types';
 export const AucoSDK: TAucoSDK = params => {
   parametersValidation(params);
   const messageFunc = setupEvents(params);
-  const unsuscribe = () => window.removeEventListener('message', messageFunc);
+  const unsuscribe = () => {
+    window.removeEventListener('message', messageFunc);
+  };
   return unsuscribe;
 };
 

@@ -25,20 +25,22 @@ interface SDKUploadData {
     identificationType?: string;
   };
 }
-interface SDKUpload extends BaseConfig {
+interface SDKUpload extends Omit<BaseConfig, 'events'> {
   /**
    * Create an upload flow with signers and approvers
    */
   sdkType: 'upload';
   sdkData: SDKUploadData;
+  events: Required<SDKEvents>;
 }
-interface SDKAttachments extends BaseConfig {
+interface SDKAttachments extends Omit<BaseConfig, 'events'> {
   /**
    * Create an attachment flow with signers. You could not add approvers.
    *  In this flow there is only one approver, that is the person who creates it.
    */
   sdkType: 'attachments';
   sdkData: SDKUploadData;
+  events: Required<SDKEvents>;
 }
 interface SDKSign extends BaseConfig {
   /**
@@ -72,4 +74,4 @@ interface SDKValidation extends BaseConfig {
   sdkData: {};
 }
 export type Config = SDKUpload | SDKAttachments | SDKSign | SDKValidation;
-export type TAucoSDK = (params: Config) => void;
+export type TAucoSDK = (params: Config) => () => void;
