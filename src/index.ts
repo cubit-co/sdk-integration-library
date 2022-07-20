@@ -23,6 +23,8 @@ const setupEvents = (params: Config) => {
   const { iframeId, events, language, sdkData } = params;
   const origin = params.customOrigin
     ? params.customOrigin
+    : params.env == 'DEV'
+    ? getDevSDKURL[params.sdkType]
     : getSDKURL[params.sdkType];
   const iframe = document.getElementById(iframeId) as HTMLIFrameElement;
   if (!iframe) {
@@ -62,6 +64,12 @@ const getSDKURL: SDKTypeObjectKeys = {
   upload: 'https://upload.auco.ai',
   sign: 'https://sign.auco.ai',
   attachments: 'https://upload.auco.ai',
+  validation: '',
+};
+const getDevSDKURL: SDKTypeObjectKeys = {
+  upload: 'https://upload-stage.auco.ai',
+  sign: 'https://sign-stage.auco.ai',
+  attachments: 'https://upload-stage.auco.ai',
   validation: '',
 };
 const getExtraConstants = (type: SDKs) => {

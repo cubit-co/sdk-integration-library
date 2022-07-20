@@ -11,11 +11,11 @@ let config = {
   sdkData: {
     flowType: 'upload-document',
     userAttributes: {
-      email: '',
-      firstName: '',
-      lastName: '',
+      email: 'andres.calvo@aucod',
+      name: 'Andres Calvo',
     },
   },
+  customOrigin: 'http://localhost:3000',
 };
 window.onload = function() {
   console.log(AucoSDK);

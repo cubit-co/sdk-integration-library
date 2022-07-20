@@ -1,5 +1,6 @@
 export type Languages = 'es' | 'en';
 export type SDKs = 'upload' | 'attachments' | 'validation' | 'sign';
+export type EnvType = 'DEV' | 'PROD';
 export type SDKTypeObjectKeys = {
   [x in SDKs]: string;
 };
@@ -15,6 +16,7 @@ interface BaseConfig {
   language: Languages;
   events: SDKEvents;
   customOrigin?: string;
+  env: EnvType;
 }
 interface SDKUploadData {
   userAttributes: {
