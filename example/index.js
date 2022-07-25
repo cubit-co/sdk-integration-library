@@ -15,7 +15,8 @@ let config = {
       name: 'Andres Calvo',
     },
   },
-  customOrigin: 'http://localhost:3000',
+  env: 'DEV',
+  customOrigin: 'http://localhost:3001',
 };
 window.onload = function() {
   console.log(AucoSDK);

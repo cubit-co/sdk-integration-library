@@ -1,5 +1,13 @@
 import { TAucoSDK, Config, SDKTypeObjectKeys, SDKs } from './types';
-
+function uuid() {
+  const url = URL.createObjectURL(new Blob());
+  const [id] = url
+    .toString()
+    .split('/')
+    .reverse();
+  URL.revokeObjectURL(url);
+  return id;
+}
 export const AucoSDK: TAucoSDK = params => {
   parametersValidation(params);
   const messageFunc = setupEvents(params);
@@ -57,7 +65,7 @@ const setupEvents = (params: Config) => {
     }
   }
   window.addEventListener('message', onMessage);
-  iframe.src = origin;
+  iframe.src = origin + '?id=' + uuid();
   return onMessage;
 };
 const getSDKURL: SDKTypeObjectKeys = {
