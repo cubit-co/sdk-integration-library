@@ -8,6 +8,7 @@ export type SDKEvents = {
   onSDKReady: () => void;
   onSDKClose: () => void;
   onSDKToken?: () => Promise<string>;
+  onSDKPay?: ({ docCode, wompi }: { docCode: string; wompi: string }) => void;
 };
 interface BaseConfig {
   keyPublic?: string;

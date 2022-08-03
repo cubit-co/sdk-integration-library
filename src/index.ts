@@ -42,6 +42,7 @@ const setupEvents = (params: Config) => {
   }
   async function onMessage(event: MessageEvent) {
     if (event.origin !== origin) return;
+    console.log('Eventos del ifrmae', event);
     if (event.data.ready) {
       iframe!.contentWindow?.postMessage(
         { language, ...sdkData, ...getExtraConstants(params.sdkType) },
@@ -57,11 +58,20 @@ const setupEvents = (params: Config) => {
         );
       }
       const token = await events.onSDKToken();
+      console.log(token);
       iframe!.contentWindow?.postMessage({ type: 'token', token }, origin);
     }
     if (event.data.type === 'SDK-CLOSE') {
       await events.onSDKClose();
       window.removeEventListener('message', onMessage);
+    }
+    if (event.data.type === 'SDK-PAY') {
+      if (!events.onSDKPay) {
+        throw new Error(
+          "SDK is asking for payment, but there isn't a onSDKPay function provided"
+        );
+      }
+      await events.onSDKPay(event.data.data);
     }
   }
   window.addEventListener('message', onMessage);
