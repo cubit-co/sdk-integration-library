@@ -42,7 +42,7 @@ const setupEvents = (params: Config) => {
   }
   async function onMessage(event: MessageEvent) {
     if (event.origin !== origin) return;
-    console.log('Eventos del ifrmae', event);
+    params.env == 'DEV' && console.log('Eventos del ifrmae', event);
     if (event.data.ready) {
       iframe!.contentWindow?.postMessage(
         { language, ...sdkData, ...getExtraConstants(params.sdkType) },
@@ -58,7 +58,7 @@ const setupEvents = (params: Config) => {
         );
       }
       const token = await events.onSDKToken();
-      console.log(token);
+      params.env == 'DEV' && console.log(token);
       iframe!.contentWindow?.postMessage({ type: 'token', token }, origin);
     }
     if (event.data.type === 'SDK-CLOSE') {
