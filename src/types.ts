@@ -66,6 +66,7 @@ interface SDKSign extends BaseConfig {
         gradient: string[];
       };
     };
+    signFlow?: 'document' | 'approve' | 'package'
   };
 }
 interface SDKValidation extends BaseConfig {
