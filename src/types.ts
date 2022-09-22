@@ -27,6 +27,15 @@ interface SDKUploadData {
     identification?: string;
     identificationType?: string;
   };
+  uxOptions: {
+    primaryColor: string;
+    alternateColor: string;
+    redirectUrl?: string;
+    hoverColor?: string;
+    icons?: {
+      gradient: string[];
+    };
+  };
 }
 interface SDKUpload extends Omit<BaseConfig, 'events'> {
   /**

@@ -1,12 +1,8 @@
 import { TAucoSDK, Config, SDKTypeObjectKeys, SDKs } from './types';
-function uuid() {
-  const url = URL.createObjectURL(new Blob());
-  const [id] = url
-    .toString()
-    .split('/')
-    .reverse();
-  URL.revokeObjectURL(url);
-  return id;
+function uuid(){
+  const d = new Date()
+  const s = d.toISOString().replaceAll(":","-")
+  return s
 }
 export const AucoSDK: TAucoSDK = params => {
   parametersValidation(params);
