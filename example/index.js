@@ -3,19 +3,18 @@ import { AucoSDK } from '../dist/auco-sdk-integration.esm.js';
 /** @type {import('../src/types').Config} */
 let config = {
   iframeId: 'myIframe',
-  sdkType: 'sign',
+  sdkType: 'list-validation',
   language: 'es',
   events: {
     onSDKClose: () => {},
     onSDKReady: () => {},
+    onSDKToken:async()=>""
   },
   sdkData: {
-    document:"63225460f6521aaec1e60e33BC",
     uxOptions: {
       primaryColor: "#021c30",
       alternateColor: "rgb(165, 87, 242)"
     },
-    signFlow:"package",
   },
   env: 'DEV',
   customOrigin: 'http://localhost:3000',

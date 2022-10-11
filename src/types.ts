@@ -1,5 +1,5 @@
 export type Languages = 'es' | 'en';
-export type SDKs = 'upload' | 'attachments' | 'validation' | 'sign';
+export type SDKs = 'upload' | 'attachments' | 'validation' | 'sign' | 'list-validation';
 export type EnvType = 'DEV' | 'PROD';
 export type SDKTypeObjectKeys = {
   [x in SDKs]: string;
@@ -8,7 +8,6 @@ export type SDKEvents = {
   onSDKReady: () => void;
   onSDKClose: () => void;
   onSDKToken?: () => Promise<string>;
-  onSDKPay?: ({ docCode, wompi }: { docCode: string; wompi: string }) => void;
 };
 interface BaseConfig {
   keyPublic?: string;
@@ -75,7 +74,7 @@ interface SDKSign extends BaseConfig {
         gradient: string[];
       };
     };
-    signFlow?: 'document' | 'approve' | 'package'
+    signFlow?: 'document' | 'approve' | 'package';
   };
 }
 interface SDKValidation extends BaseConfig {
@@ -86,5 +85,15 @@ interface SDKValidation extends BaseConfig {
   sdkType: 'validation';
   sdkData: {};
 }
-export type Config = SDKUpload | SDKAttachments | SDKSign | SDKValidation;
+interface SDKListValidation extends Omit<BaseConfig, 'events'> {
+  sdkType: 'list-validation';
+  sdkData: Omit<SDKUploadData, 'userAttributes'>;
+  events: Required<SDKEvents>;
+}
+export type Config =
+  | SDKUpload
+  | SDKAttachments
+  | SDKSign
+  | SDKValidation
+  | SDKListValidation;
 export type TAucoSDK = (params: Config) => () => void;

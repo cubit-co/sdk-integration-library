@@ -61,14 +61,7 @@ const setupEvents = (params: Config) => {
       await events.onSDKClose();
       window.removeEventListener('message', onMessage);
     }
-    if (event.data.type === 'SDK-PAY') {
-      if (!events.onSDKPay) {
-        throw new Error(
-          "SDK is asking for payment, but there isn't a onSDKPay function provided"
-        );
-      }
-      await events.onSDKPay(event.data.data);
-    }
+   
   }
   window.addEventListener('message', onMessage);
   iframe.src = origin + '?id=' + uuid();
@@ -79,12 +72,15 @@ const getSDKURL: SDKTypeObjectKeys = {
   sign: 'https://sign.auco.ai',
   attachments: 'https://upload.auco.ai',
   validation: '',
+  ["list-validation"]:""
 };
 const getDevSDKURL: SDKTypeObjectKeys = {
   upload: 'https://upload-stage.auco.ai',
   sign: 'https://sign-stage.auco.ai',
   attachments: 'https://upload-stage.auco.ai',
   validation: '',
+  ["list-validation"]:""
+
 };
 const getExtraConstants = (type: SDKs) => {
   let extraConstants = new Map();
