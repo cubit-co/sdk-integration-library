@@ -1,8 +1,8 @@
 import { TAucoSDK, Config, SDKTypeObjectKeys, SDKs } from './types';
-function uuid(){
-  const d = new Date()
-  const s = d.toISOString().replaceAll(":","-")
-  return s
+function uuid() {
+  const d = new Date();
+  const s = d.toISOString().replaceAll(':', '-');
+  return s;
 }
 export const AucoSDK: TAucoSDK = params => {
   parametersValidation(params);
@@ -24,12 +24,21 @@ const parametersValidation = (params: Config) => {
   }
 };
 const setupEvents = (params: Config) => {
-  const { iframeId, events, language, sdkData } = params;
-  const origin = params.customOrigin
-    ? params.customOrigin
-    : params.env == 'DEV'
-    ? getDevSDKURL[params.sdkType]
-    : getSDKURL[params.sdkType];
+  const {
+    iframeId,
+    events,
+    language,
+    sdkData,
+    keyPublic="",
+    customOrigin,
+    sdkType,
+    env,
+  } = params;
+  const origin = customOrigin
+    ? customOrigin
+    : env == 'DEV'
+    ? getDevSDKURL[sdkType]
+    : getSDKURL[sdkType];
   const iframe = document.getElementById(iframeId) as HTMLIFrameElement;
   if (!iframe) {
     throw new Error(
@@ -38,10 +47,10 @@ const setupEvents = (params: Config) => {
   }
   async function onMessage(event: MessageEvent) {
     if (event.origin !== origin) return;
-    params.env == 'DEV' && console.log('Eventos del ifrmae', event);
+    env == 'DEV' && console.log('Eventos del iframe', event);
     if (event.data.ready) {
       iframe!.contentWindow?.postMessage(
-        { language, ...sdkData, ...getExtraConstants(params.sdkType) },
+        { language, ...sdkData,keyPublic, ...getExtraConstants(sdkType) },
         origin
       );
       await events.onSDKReady();
@@ -61,7 +70,6 @@ const setupEvents = (params: Config) => {
       await events.onSDKClose();
       window.removeEventListener('message', onMessage);
     }
-   
   }
   window.addEventListener('message', onMessage);
   iframe.src = origin + '?id=' + uuid();
@@ -72,15 +80,14 @@ const getSDKURL: SDKTypeObjectKeys = {
   sign: 'https://sign.auco.ai',
   attachments: 'https://upload.auco.ai',
   validation: '',
-  ["list-validation"]:""
+  ['list-validation']: '',
 };
 const getDevSDKURL: SDKTypeObjectKeys = {
   upload: 'https://upload-stage.auco.ai',
   sign: 'https://sign-stage.auco.ai',
   attachments: 'https://upload-stage.auco.ai',
   validation: '',
-  ["list-validation"]:""
-
+  ['list-validation']: '',
 };
 const getExtraConstants = (type: SDKs) => {
   let extraConstants = new Map();
