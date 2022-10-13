@@ -56,7 +56,6 @@ const setupEvents = (params: Config) => {
   }
 
   async function onMessage(event: MessageEvent) {
-    console.log(event)
     if (event.origin !== origin) return;
     env == 'DEV' && console.log('Eventos del iframe', event);
     if (event.data.ready) {
@@ -78,7 +77,6 @@ const setupEvents = (params: Config) => {
       iframe!.contentWindow?.postMessage({ type: 'token', token }, origin);
     }
     if (event.data.type === 'SDK-CLOSE') {
-      console.log(event)
       await events.onSDKClose(event.data?.document ??"");
       window.removeEventListener('message', onMessage);
     }
