@@ -40,12 +40,23 @@ const setupEvents = (params: Config) => {
     ? getDevSDKURL[sdkType]
     : getSDKURL[sdkType];
   const iframe = document.getElementById(iframeId) as HTMLIFrameElement;
+
   if (!iframe) {
     throw new Error(
       `Could not start SDK, Iframe with id: ${iframeId} not found`
     );
   }
+
+  if(keyPublic.length == 0 && !events.onSDKToken ){
+    throw new Error ("Could not start SDK, onSDKToken is missing")
+  }
+
+  if(keyPublic && keyPublic.length != 36 ){
+    throw new Error ("Could not start SDK, invalid keyPublic")
+  }
+
   async function onMessage(event: MessageEvent) {
+    console.log(event)
     if (event.origin !== origin) return;
     env == 'DEV' && console.log('Eventos del iframe', event);
     if (event.data.ready) {
@@ -67,7 +78,8 @@ const setupEvents = (params: Config) => {
       iframe!.contentWindow?.postMessage({ type: 'token', token }, origin);
     }
     if (event.data.type === 'SDK-CLOSE') {
-      await events.onSDKClose();
+      console.log(event)
+      await events.onSDKClose(event.data?.document ??"");
       window.removeEventListener('message', onMessage);
     }
   }

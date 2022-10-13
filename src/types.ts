@@ -6,7 +6,7 @@ export type SDKTypeObjectKeys = {
 };
 export type SDKEvents = {
   onSDKReady: () => void;
-  onSDKClose: () => void;
+  onSDKClose: (documentId?:string) => void;
   onSDKToken?: () => Promise<string>;
 };
 interface BaseConfig {
@@ -42,8 +42,9 @@ interface SDKUpload extends Omit<BaseConfig, 'events'> {
    */
   sdkType: 'upload';
   sdkData: SDKUploadData;
-  events: Required<SDKEvents>;
+  events: SDKEvents;
 }
+
 interface SDKAttachments extends Omit<BaseConfig, 'events'> {
   /**
    * Create an attachment flow with signers. You could not add approvers.
@@ -51,7 +52,7 @@ interface SDKAttachments extends Omit<BaseConfig, 'events'> {
    */
   sdkType: 'attachments';
   sdkData: SDKUploadData;
-  events: Required<SDKEvents>;
+  events: SDKEvents;
 }
 interface SDKSign extends BaseConfig {
   /**
