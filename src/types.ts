@@ -1,12 +1,17 @@
 export type Languages = 'es' | 'en';
-export type SDKs = 'upload' | 'attachments' | 'validation' | 'sign' | 'list-validation';
+export type SDKs =
+  | 'upload'
+  | 'attachments'
+  | 'validation'
+  | 'sign'
+  | 'list-validation';
 export type EnvType = 'DEV' | 'PROD';
 export type SDKTypeObjectKeys = {
   [x in SDKs]: string;
 };
 export type SDKEvents = {
   onSDKReady: () => void;
-  onSDKClose: (documentId?:string) => void;
+  onSDKClose: (documentId?: string) => void;
   onSDKToken?: () => Promise<string>;
 };
 interface BaseConfig {
@@ -88,7 +93,9 @@ interface SDKValidation extends BaseConfig {
 }
 interface SDKListValidation extends Omit<BaseConfig, 'events'> {
   sdkType: 'list-validation';
-  sdkData: Omit<SDKUploadData, 'userAttributes'>;
+  sdkData: Omit<SDKUploadData, 'userAttributes'> & {
+    showPrices: boolean;
+  };
   events: Required<SDKEvents>;
 }
 export type Config =
