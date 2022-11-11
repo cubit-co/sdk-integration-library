@@ -4,7 +4,7 @@ import { AucoSDK } from '../dist/auco-sdk-integration.esm.js';
 let config = {
   iframeId: 'myIframe',
   sdkType: 'upload',
-  keyPublic:"puk_ocG0ODMlBlAN4NOi4GxVJjmC7oO6SsNI",
+  keyPublic:"",
   language: 'es',
   events: {
     onSDKClose: (documentId) => {
@@ -24,7 +24,6 @@ let config = {
     },
   },
   env: 'DEV',
-  customOrigin: 'http://localhost:3000',
 };
 window.onload = function() {
   console.log(AucoSDK);

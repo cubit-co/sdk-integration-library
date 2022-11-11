@@ -29,7 +29,7 @@ const setupEvents = (params: Config) => {
     events,
     language,
     sdkData,
-    keyPublic="",
+    keyPublic = undefined,
     customOrigin,
     sdkType,
     env,
@@ -47,12 +47,12 @@ const setupEvents = (params: Config) => {
     );
   }
 
-  if(keyPublic.length == 0 && !events.onSDKToken ){
-    throw new Error ("Could not start SDK, onSDKToken is missing")
+  if (keyPublic && keyPublic.length != 36 && !events.onSDKToken) {
+    throw new Error('Could not start SDK, onSDKToken is missing');
   }
 
-  if(keyPublic && keyPublic.length != 36 ){
-    throw new Error ("Could not start SDK, invalid keyPublic")
+  if (keyPublic && keyPublic.length != 36) {
+    throw new Error('Could not start SDK, invalid keyPublic');
   }
 
   async function onMessage(event: MessageEvent) {
@@ -60,7 +60,7 @@ const setupEvents = (params: Config) => {
     env == 'DEV' && console.log('Eventos del iframe', event);
     if (event.data.ready) {
       iframe!.contentWindow?.postMessage(
-        { language, ...sdkData,keyPublic, ...getExtraConstants(sdkType) },
+        { language, ...sdkData, keyPublic, ...getExtraConstants(sdkType) },
         origin
       );
       await events.onSDKReady();
@@ -77,7 +77,7 @@ const setupEvents = (params: Config) => {
       iframe!.contentWindow?.postMessage({ type: 'token', token }, origin);
     }
     if (event.data.type === 'SDK-CLOSE') {
-      await events.onSDKClose(event.data?.document ??"");
+      await events.onSDKClose(event.data?.document ?? '');
       window.removeEventListener('message', onMessage);
     }
   }
@@ -89,22 +89,30 @@ const getSDKURL: SDKTypeObjectKeys = {
   upload: 'https://upload.auco.ai',
   sign: 'https://sign.auco.ai',
   attachments: 'https://upload.auco.ai',
+  "validation-attachments": 'https://upload.auco.ai',
   validation: '',
-  ['list-validation']: '',
+  'list-validation': '',
 };
 const getDevSDKURL: SDKTypeObjectKeys = {
   upload: 'https://upload-stage.auco.ai',
   sign: 'https://sign-stage.auco.ai',
   attachments: 'https://upload-stage.auco.ai',
+  "validation-attachments": 'https://upload-stage.auco.ai',
   validation: '',
-  ['list-validation']: '',
+  'list-validation': '',
 };
+
+const flowTypesUploadSDK = {
+  upload:"upload",
+  attachments:"attachments",
+  "validation-attachments":"validation-attachments"
+}
 const getExtraConstants = (type: SDKs) => {
   let extraConstants = new Map();
-  if (type == 'upload' || type == 'attachments') {
+  if (Object.keys(flowTypesUploadSDK).includes(type)) {
     extraConstants.set(
       'flowType',
-      type == 'upload' ? 'upload-document' : 'add-documents'
+      type
     );
   }
   return Object.fromEntries(extraConstants);

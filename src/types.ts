@@ -2,6 +2,7 @@ export type Languages = 'es' | 'en';
 export type SDKs =
   | 'upload'
   | 'attachments'
+  | 'validation-attachments'
   | 'validation'
   | 'sign'
   | 'list-validation';
@@ -59,6 +60,14 @@ interface SDKAttachments extends Omit<BaseConfig, 'events'> {
   sdkData: SDKUploadData;
   events: SDKEvents;
 }
+interface SDKValidationAttachments extends Omit<BaseConfig, 'events'> {
+  /**
+   * Create an attachment flow with validation in restrictive list. You could not add approvers.
+   */
+  sdkType: 'validation-attachments';
+  sdkData: SDKUploadData;
+  events: SDKEvents;
+}
 interface SDKSign extends BaseConfig {
   /**
    * Sign flow, use this flow to let your users sign your documents
@@ -101,6 +110,7 @@ interface SDKListValidation extends Omit<BaseConfig, 'events'> {
 export type Config =
   | SDKUpload
   | SDKAttachments
+  | SDKValidationAttachments
   | SDKSign
   | SDKValidation
   | SDKListValidation;
