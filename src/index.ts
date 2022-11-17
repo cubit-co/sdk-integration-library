@@ -76,6 +76,14 @@ const setupEvents = (params: Config) => {
       params.env == 'DEV' && console.log(token);
       iframe!.contentWindow?.postMessage({ type: 'token', token }, origin);
     }
+    if (event.data.type === 'SDK-PAY') {
+      if (!events.onSDKPay) {
+        throw new Error(
+          "SDK is asking for payment, but there isn't a onSDKPay function provided"
+        );
+      }
+      await events.onSDKPay(event.data.data);
+    }
     if (event.data.type === 'SDK-CLOSE') {
       await events.onSDKClose(event.data?.document ?? '');
       window.removeEventListener('message', onMessage);
