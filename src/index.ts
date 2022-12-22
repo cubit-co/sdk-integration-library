@@ -60,7 +60,13 @@ const setupEvents = (params: Config) => {
     env == 'DEV' && console.log('Eventos del iframe', event);
     if (event.data.ready) {
       iframe!.contentWindow?.postMessage(
-        { language, ...sdkData, keyPublic, ...getExtraConstants(sdkType) },
+        {
+          language,
+          ...sdkData,
+          keyPublic,
+          sdkParentURL: window.location.href,
+          ...getExtraConstants(sdkType),
+        },
         origin
       );
       await events.onSDKReady();
@@ -97,7 +103,7 @@ const getSDKURL: SDKTypeObjectKeys = {
   upload: 'https://upload.auco.ai',
   sign: 'https://sign.auco.ai',
   attachments: 'https://upload.auco.ai',
-  "validation-attachments": 'https://upload.auco.ai',
+  'validation-attachments': 'https://upload.auco.ai',
   validation: '',
   'list-validation': '',
 };
@@ -105,23 +111,20 @@ const getDevSDKURL: SDKTypeObjectKeys = {
   upload: 'https://upload-stage.auco.ai',
   sign: 'https://sign-stage.auco.ai',
   attachments: 'https://upload-stage.auco.ai',
-  "validation-attachments": 'https://upload-stage.auco.ai',
+  'validation-attachments': 'https://upload-stage.auco.ai',
   validation: '',
   'list-validation': '',
 };
 
 const flowTypesUploadSDK = {
-  upload:"upload",
-  attachments:"attachments",
-  "validation-attachments":"validation-attachments"
-}
+  upload: 'upload',
+  attachments: 'attachments',
+  'validation-attachments': 'validation-attachments',
+};
 const getExtraConstants = (type: SDKs) => {
   let extraConstants = new Map();
   if (Object.keys(flowTypesUploadSDK).includes(type)) {
-    extraConstants.set(
-      'flowType',
-      type
-    );
+    extraConstants.set('flowType', type);
   }
   return Object.fromEntries(extraConstants);
 };
