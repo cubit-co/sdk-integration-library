@@ -104,7 +104,7 @@ const getSDKURL: SDKTypeObjectKeys = {
   sign: 'https://sign.auco.ai',
   attachments: 'https://upload.auco.ai',
   'validation-attachments': 'https://upload.auco.ai',
-  validation: '',
+  validation: 'https://veriface.auco.ai',
   'list-validation': '',
 };
 const getDevSDKURL: SDKTypeObjectKeys = {
@@ -112,7 +112,7 @@ const getDevSDKURL: SDKTypeObjectKeys = {
   sign: 'https://sign-stage.auco.ai',
   attachments: 'https://upload-stage.auco.ai',
   'validation-attachments': 'https://upload-stage.auco.ai',
-  validation: '',
+  validation: 'https://veriface-stage.auco.ai',
   'list-validation': '',
 };
 

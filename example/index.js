@@ -3,7 +3,7 @@ import { AucoSDK } from '../dist/auco-sdk-integration.esm.js';
 /** @type {import('../src/types').Config} */
 let config = {
   iframeId: 'myIframe',
-  sdkType: 'sign',
+  sdkType: 'validation',
   keyPublic: '',
   language: 'es',
   events: {

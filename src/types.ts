@@ -93,13 +93,16 @@ interface SDKSign extends BaseConfig {
     signFlow?: 'document' | 'approve' | 'package';
   };
 }
-interface SDKValidation extends BaseConfig {
+interface SDKValidation extends Omit<BaseConfig, 'events'> {
   /**
    * Create a validation flow, Your customer validate his face against his
    * ID Photo and you receive a response with the similarity between those two photos
    */
   sdkType: 'validation';
   sdkData: {};
+  events: Omit<BaseConfig['events'],"onSDKClose"> & {
+    onSDKClose: (similarity?: number) => void;
+  };
 }
 interface SDKListValidation extends Omit<BaseConfig, 'events'> {
   sdkType: 'list-validation';
