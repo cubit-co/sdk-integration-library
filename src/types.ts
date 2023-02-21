@@ -99,7 +99,6 @@ interface SDKValidation extends Omit<BaseConfig, 'events'> {
    * ID Photo and you receive a response with the similarity between those two photos
    */
   sdkType: 'validation';
-  sdkData: {};
   events: Omit<BaseConfig['events'],"onSDKClose"> & {
     onSDKClose: (similarity?: number) => void;
   };

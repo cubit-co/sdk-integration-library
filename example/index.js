@@ -11,17 +11,8 @@ let config = {
       console.log('Este es el documento', documentId);
     },
     onSDKReady: () => {},
-    onSDKToken: async () => '',
-  },
-  sdkData: {
-    document: '123143',
-    uxOptions: {
-      primaryColor: '#021c30',
-      alternateColor: 'rgb(165, 87, 242)',
-    },
   },
   env: 'DEV',
-  customOrigin: 'http://localhost:3000',
 };
 window.onload = function() {
   console.log(AucoSDK);
