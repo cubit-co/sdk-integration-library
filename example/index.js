@@ -13,6 +13,9 @@ let config = {
     onSDKReady: () => {},
   },
   env: 'DEV',
+  sdkData:{
+    document:""
+  }
 };
 window.onload = function() {
   console.log(AucoSDK);

@@ -102,6 +102,12 @@ interface SDKValidation extends Omit<BaseConfig, 'events'> {
   events: Omit<BaseConfig['events'],"onSDKClose"> & {
     onSDKClose: (similarity?: number) => void;
   };
+  sdkData:{
+    /**
+     * code from /validate API response
+     */
+    document:string
+  }
 }
 interface SDKListValidation extends Omit<BaseConfig, 'events'> {
   sdkType: 'list-validation';
