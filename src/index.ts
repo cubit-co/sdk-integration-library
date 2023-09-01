@@ -91,7 +91,10 @@ const setupEvents = (params: Config) => {
       await events.onSDKPay(event.data.data);
     }
     if (event.data.type === 'SDK-CLOSE') {
-      await events.onSDKClose(event.data?.document ?? '');
+      await events.onSDKClose(
+        event.data?.document ?? '',
+        event.data?.redirectTo ?? ''
+      );
       window.removeEventListener('message', onMessage);
     }
   }

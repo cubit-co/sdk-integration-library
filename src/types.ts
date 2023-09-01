@@ -12,7 +12,7 @@ export type SDKTypeObjectKeys = {
 };
 export type SDKEvents = {
   onSDKReady: () => void;
-  onSDKClose: (documentId?: string) => void;
+  onSDKClose: (documentId?: string, redirectTo?: string) => void;
   onSDKToken?: () => Promise<string>;
   onSDKPay?: ({ docCode, wompi }: { docCode: string; wompi: string }) => void;
 };
