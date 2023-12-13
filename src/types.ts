@@ -100,7 +100,7 @@ interface SDKValidation extends Omit<BaseConfig, 'events'> {
    */
   sdkType: 'validation';
   events: Omit<BaseConfig['events'],"onSDKClose"> & {
-    onSDKClose: (similarity?: number) => void;
+    onSDKClose: (similarity?: number, status?: string) => void;
   };
   sdkData:{
     /**

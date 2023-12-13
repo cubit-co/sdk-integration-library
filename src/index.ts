@@ -92,10 +92,11 @@ const setupEvents = (params: Config) => {
     }
     if (event.data.type === 'SDK-CLOSE') {
       await events.onSDKClose(
-        event.data?.document ?? '',
-        event.data?.redirectTo ?? ''
+        event.data?.document ?? event.data?.similarity ?? '',
+        event.data?.redirectTo ?? event.data?.status ?? ''
       );
-      window.removeEventListener('message', onMessage);
+      if ((event.data?.status !== 'PENDING' ))
+        window.removeEventListener('message', onMessage);
     }
   }
   window.addEventListener('message', onMessage);
