@@ -95,7 +95,7 @@ const setupEvents = (params: Config) => {
         event.data?.document ?? event.data?.similarity ?? '',
         event.data?.redirectTo ?? event.data?.status ?? ''
       );
-      if ((event.data?.status !== 'PENDING' ))
+      if (event.data?.status !== 'PENDING')
         window.removeEventListener('message', onMessage);
     }
   }
@@ -110,6 +110,7 @@ const getSDKURL: SDKTypeObjectKeys = {
   'validation-attachments': 'https://upload.auco.ai',
   validation: 'https://veriface.auco.ai',
   'list-validation': '',
+  fill: 'https://fill.auco.ai',
 };
 const getDevSDKURL: SDKTypeObjectKeys = {
   upload: 'https://upload-stage.auco.ai',
@@ -118,6 +119,7 @@ const getDevSDKURL: SDKTypeObjectKeys = {
   'validation-attachments': 'https://upload-stage.auco.ai',
   validation: 'https://veriface-stage.auco.ai',
   'list-validation': '',
+  fill: 'https://fill-stage.auco.ai/',
 };
 
 const flowTypesUploadSDK = {

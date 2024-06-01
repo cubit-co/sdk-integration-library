@@ -5,7 +5,8 @@ export type SDKs =
   | 'validation-attachments'
   | 'validation'
   | 'sign'
-  | 'list-validation';
+  | 'list-validation'
+  | 'fill';
 export type EnvType = 'DEV' | 'PROD';
 export type SDKTypeObjectKeys = {
   [x in SDKs]: string;
@@ -99,15 +100,15 @@ interface SDKValidation extends Omit<BaseConfig, 'events'> {
    * ID Photo and you receive a response with the similarity between those two photos
    */
   sdkType: 'validation';
-  events: Omit<BaseConfig['events'],"onSDKClose"> & {
+  events: Omit<BaseConfig['events'], 'onSDKClose'> & {
     onSDKClose: (similarity?: number, status?: string) => void;
   };
-  sdkData:{
+  sdkData: {
     /**
      * code from /validate API response
      */
-    document:string
-  }
+    document: string;
+  };
 }
 interface SDKListValidation extends Omit<BaseConfig, 'events'> {
   sdkType: 'list-validation';
@@ -116,11 +117,44 @@ interface SDKListValidation extends Omit<BaseConfig, 'events'> {
   };
   events: Required<SDKEvents>;
 }
+
+interface SDKFill extends BaseConfig {
+  sdkType: 'fill';
+  sdkData: {
+    /**
+     * template Id
+     */
+    document: string;
+    /**
+     * code if is editing template or finishing prebuild
+     */
+    code?: string;
+    /**
+     * prebuild if it's first prebuild phase
+     */
+    preBuild?: boolean;
+    /**
+     * reference if is filling a reusedocument
+     */
+    reference?: string;
+    uxOptions: {
+      primaryColor: string;
+      alternateColor: string;
+      redirectUrl?: string;
+      hoverColor?: string;
+      icons?: {
+        gradient: string[];
+      };
+    };
+  };
+}
+
 export type Config =
   | SDKUpload
   | SDKAttachments
   | SDKValidationAttachments
   | SDKSign
   | SDKValidation
-  | SDKListValidation;
+  | SDKListValidation
+  | SDKFill;
 export type TAucoSDK = (params: Config) => () => void;
