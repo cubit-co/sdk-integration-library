@@ -110,7 +110,7 @@ const getSDKURL: SDKTypeObjectKeys = {
   'validation-attachments': 'https://upload.auco.ai',
   validation: 'https://veriface.auco.ai',
   'list-validation': '',
-  fill: 'https://fill.auco.ai',
+  fill: 'https://fill2.auco.ai',
 };
 const getDevSDKURL: SDKTypeObjectKeys = {
   upload: 'https://upload-stage.auco.ai',
@@ -119,7 +119,7 @@ const getDevSDKURL: SDKTypeObjectKeys = {
   'validation-attachments': 'https://upload-stage.auco.ai',
   validation: 'https://veriface-stage.auco.ai',
   'list-validation': '',
-  fill: 'https://fill-stage.auco.ai/',
+  fill: 'https://fill2-stage.auco.ai/',
 };
 
 const flowTypesUploadSDK = {
