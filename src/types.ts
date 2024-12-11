@@ -1,6 +1,7 @@
 export type Languages = 'es' | 'en';
 export type SDKs =
   | 'upload'
+  | 'read'
   | 'attachments'
   | 'validation-attachments'
   | 'validation'
@@ -59,6 +60,14 @@ interface SDKAttachments extends Omit<BaseConfig, 'events'> {
    *  In this flow there is only one approver, that is the person who creates it.
    */
   sdkType: 'attachments';
+  sdkData: SDKUploadData;
+  events: SDKEvents;
+}
+interface SDKRead extends Omit<BaseConfig, 'events'> {
+  /**
+   * Create an read flow with readers or generate a read link.
+   */
+  sdkType: 'read';
   sdkData: SDKUploadData;
   events: SDKEvents;
 }
@@ -151,6 +160,7 @@ interface SDKFill extends BaseConfig {
 
 export type Config =
   | SDKUpload
+  | SDKRead
   | SDKAttachments
   | SDKValidationAttachments
   | SDKSign
