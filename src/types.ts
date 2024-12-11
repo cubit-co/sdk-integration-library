@@ -101,6 +101,10 @@ interface SDKSign extends BaseConfig {
       };
     };
     signFlow?: 'document' | 'approve' | 'package' | 'read';
+    /**
+     * email is needed on read functionality when user is logged in
+     */
+    email?: string
   };
 }
 interface SDKValidation extends Omit<BaseConfig, 'events'> {
