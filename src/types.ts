@@ -100,7 +100,7 @@ interface SDKSign extends BaseConfig {
         gradient: string[];
       };
     };
-    signFlow?: 'document' | 'approve' | 'package';
+    signFlow?: 'document' | 'approve' | 'package' | 'read';
   };
 }
 interface SDKValidation extends Omit<BaseConfig, 'events'> {
