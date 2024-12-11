@@ -104,7 +104,7 @@ interface SDKSign extends BaseConfig {
     /**
      * email is needed on read functionality when user is logged in
      */
-    email?: string
+    email?: string;
   };
 }
 interface SDKValidation extends Omit<BaseConfig, 'events'> {
