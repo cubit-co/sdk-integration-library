@@ -107,6 +107,7 @@ const getSDKURL: SDKTypeObjectKeys = {
   upload: 'https://upload.auco.ai',
   sign: 'https://sign.auco.ai',
   attachments: 'https://upload.auco.ai',
+  read: 'https://upload.auco.ai',
   'validation-attachments': 'https://upload.auco.ai',
   validation: 'https://veriface.auco.ai',
   'list-validation': '',
@@ -116,6 +117,7 @@ const getDevSDKURL: SDKTypeObjectKeys = {
   upload: 'https://upload-stage.auco.ai',
   sign: 'https://sign-stage.auco.ai',
   attachments: 'https://upload-stage.auco.ai',
+  read: 'https://upload-stage.auco.ai',
   'validation-attachments': 'https://upload-stage.auco.ai',
   validation: 'https://veriface-stage.auco.ai',
   'list-validation': '',
@@ -124,6 +126,7 @@ const getDevSDKURL: SDKTypeObjectKeys = {
 
 const flowTypesUploadSDK = {
   upload: 'upload',
+  read: 'read',
   attachments: 'attachments',
   'validation-attachments': 'validation-attachments',
 };

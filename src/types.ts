@@ -1,6 +1,7 @@
 export type Languages = 'es' | 'en';
 export type SDKs =
   | 'upload'
+  | 'read'
   | 'attachments'
   | 'validation-attachments'
   | 'validation'
@@ -62,6 +63,14 @@ interface SDKAttachments extends Omit<BaseConfig, 'events'> {
   sdkData: SDKUploadData;
   events: SDKEvents;
 }
+interface SDKRead extends Omit<BaseConfig, 'events'> {
+  /**
+   * Create an read flow with readers or generate a read link.
+   */
+  sdkType: 'read';
+  sdkData: SDKUploadData;
+  events: SDKEvents;
+}
 interface SDKValidationAttachments extends Omit<BaseConfig, 'events'> {
   /**
    * Create an attachment flow with validation in restrictive list. You could not add approvers.
@@ -91,7 +100,7 @@ interface SDKSign extends BaseConfig {
         gradient: string[];
       };
     };
-    signFlow?: 'document' | 'approve' | 'package';
+    signFlow?: 'document' | 'approve' | 'package' | 'read';
   };
 }
 interface SDKValidation extends Omit<BaseConfig, 'events'> {
@@ -151,6 +160,7 @@ interface SDKFill extends BaseConfig {
 
 export type Config =
   | SDKUpload
+  | SDKRead
   | SDKAttachments
   | SDKValidationAttachments
   | SDKSign
