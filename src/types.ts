@@ -26,14 +26,17 @@ interface BaseConfig {
   customOrigin?: string;
   env: EnvType;
 }
+interface userAttributes {
+  name?: string;
+  email?: string;
+  phone?: string;
+  identification?: string;
+  identificationType?: string;
+  country?: string;
+}
 interface SDKUploadData {
-  userAttributes: {
-    name: string;
-    email: string;
-    phone?: string;
-    identification?: string;
-    identificationType?: string;
-  };
+  userAttributes?: userAttributes;
+  users?: userAttributes[];
   uxOptions: {
     primaryColor: string;
     alternateColor: string;

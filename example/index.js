@@ -6,6 +6,7 @@ let config = {
   sdkType: 'validation',
   keyPublic: '',
   language: 'es',
+  customOrigin: 'http://localhost:3000',
   events: {
     onSDKClose: documentId => {
       console.log('Este es el documento', documentId);
@@ -13,9 +14,9 @@ let config = {
     onSDKReady: () => {},
   },
   env: 'DEV',
-  sdkData:{
-    document:""
-  }
+  sdkData: {
+    document: ""
+  },
 };
 window.onload = function() {
   console.log(AucoSDK);
