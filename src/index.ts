@@ -72,7 +72,7 @@ const setupEvents = (params: Config) => {
       await events.onSDKReady();
       return;
     }
-    if (event.data.type.includes('token')) {
+    if (event.data?.type?.includes('token')) {
       if (!events.onSDKToken) {
         throw new Error(
           "Could not get token, SDK is asking for user token, but there isn't a onSDKToken function provided"
@@ -82,7 +82,7 @@ const setupEvents = (params: Config) => {
       params.env == 'DEV' && console.log(token);
       iframe!.contentWindow?.postMessage({ type: 'token', token }, origin);
     }
-    if (event.data.type === 'SDK-PAY') {
+    if (event.data?.type === 'SDK-PAY') {
       if (!events.onSDKPay) {
         throw new Error(
           "SDK is asking for payment, but there isn't a onSDKPay function provided"
@@ -90,7 +90,12 @@ const setupEvents = (params: Config) => {
       }
       await events.onSDKPay(event.data.data);
     }
-    if (event.data.type === 'SDK-CLOSE') {
+    if (event.data?.type === 'SDK-NOTIFICATION') {
+      if (events.onSDKNotification) {
+        await events.onSDKNotification(event.data.data);
+      }
+    }
+    if (event.data?.type === 'SDK-CLOSE') {
       await events.onSDKClose(
         event.data?.document ?? event.data?.similarity ?? '',
         event.data?.redirectTo ?? event.data?.status ?? ''
