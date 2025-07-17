@@ -136,6 +136,15 @@ interface SDKValidation extends Omit<BaseConfig, 'events'> {
      * code from /validate API response
      */
     document: string;
+    uxOptions: {
+      primaryColor: string;
+      alternateColor: string;
+      redirectUrl?: string;
+      hoverColor?: string;
+      icons?: {
+        gradient: string[];
+      };
+    };
   };
 }
 interface SDKListValidation extends Omit<BaseConfig, 'events'> {

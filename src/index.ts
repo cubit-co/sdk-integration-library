@@ -57,7 +57,6 @@ const setupEvents = (params: Config) => {
 
   async function onMessage(event: MessageEvent) {
     if (event.origin !== origin) return;
-    env == 'DEV' && console.log('Eventos del iframe', event);
     if (event.data.ready) {
       iframe!.contentWindow?.postMessage(
         {
@@ -79,7 +78,6 @@ const setupEvents = (params: Config) => {
         );
       }
       const token = await events.onSDKToken();
-      params.env == 'DEV' && console.log(token);
       iframe!.contentWindow?.postMessage({ type: 'token', token }, origin);
     }
     if (event.data?.type === 'SDK-PAY') {
