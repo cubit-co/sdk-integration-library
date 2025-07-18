@@ -47,9 +47,29 @@ interface userAttributes {
   identificationType?: string;
   country?: string;
 }
+
+interface ParticipantAttributes extends userAttributes {
+  type: 'signer' | 'approver' | 'reader';
+  id: string;
+}
 interface SDKUploadData {
   userAttributes?: userAttributes;
   users?: userAttributes[];
+  flowData?: {
+    platform: 'whatsapp' | 'auco';
+    validations: {
+      otpCode?: 'phone' | 'email';
+      selfie: boolean;
+      identification: boolean;
+      identificationCardBack: boolean;
+      flow: boolean;
+    };
+    participants: ParticipantAttributes[];
+    name: string;
+    message: string;
+    subject: string;
+    files: File[];
+  };
   uxOptions: {
     primaryColor: string;
     alternateColor: string;
