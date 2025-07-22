@@ -13,15 +13,15 @@ Una librería completa para la integración de múltiples SDKs de servicios de d
 ## 📦 Instalación
 
 ```bash
-npm install sdk-integration-library
+npm install auco-sdk-integration
 ```
 
 ```bash
-yarn add sdk-integration-library
+yarn add auco-sdk-integration
 ```
 
 ```bash
-pnpm add sdk-integration-library
+pnpm add auco-sdk-integration
 ```
 
 Para ver la documentación de integración de cada SDK visita [docs.auco.ai](docs.auco.ai/sdk/intro)
