@@ -121,7 +121,18 @@ interface SDKUpload extends Omit<BaseConfig, 'events'> {
    */
   sdkType: 'upload';
   sdkData: SDKUploadData;
-  events: SDKEvents;
+  events: Omit<BaseConfig['events'], 'onSDKClose'> & {
+    onSDKClose: (
+      documentId?: string,
+      redirectTo?: string,
+      signProfile?: Array<{
+        id: string;
+        name: string;
+        email: string;
+        phone: string;
+      }>
+    ) => void;
+  };
 }
 
 interface SDKAttachments extends Omit<BaseConfig, 'events'> {

@@ -94,9 +94,11 @@ const setupEvents = (params: Config) => {
       }
     }
     if (event.data?.type === 'SDK-CLOSE') {
+      console.log("[SDKCLOSE][Event][Data]",event.data)
       await events.onSDKClose(
         event.data?.document ?? event.data?.similarity ?? '',
-        event.data?.redirectTo ?? event.data?.status ?? ''
+        event.data?.redirectTo ?? event.data?.status ?? '',
+        event.data?.signProfile ?? []
       );
       if (event.data?.status !== 'PENDING')
         window.removeEventListener('message', onMessage);

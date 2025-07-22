@@ -16,12 +16,13 @@ function getConfig(files) {
   const config = {
     iframeId: 'myIframe',
     sdkType: 'upload',
-    keyPublic: '',
+    keyPublic: 'prk_e1cd6a01ecdb4b4ea72ec118e33b18de',
     language: 'es',
     customOrigin: 'http://localhost:4200',
     events: {
-      onSDKClose: documentId => {
+      onSDKClose: (documentId, redirect, signProfile) => {
         console.log('Este es el documento', documentId);
+        console.log('Participantes del documento', signProfile);
       },
       onSDKReady: () => {},
       onSDKToken: () => {
@@ -30,16 +31,17 @@ function getConfig(files) {
     },
     env: 'DEV',
     sdkData: {
+      userAttributes: {
+        email: 'evelyn@auco.ai',
+      },
       flowData: {
         type: 'complete',
         files: files,
         emailData: {
-          name: 'Prueba precargar flujo',
+          name: 'Prueba precargar flujo con notificationOff',
           message: 'Mensaje',
           subject: 'Sujeto',
-          expire: new Date(),
           notificationOff: true,
-          remember: '48',
         },
         platform: 'auco',
         validations: {
