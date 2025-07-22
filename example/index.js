@@ -20,8 +20,9 @@ function getConfig(files) {
     language: 'es',
     customOrigin: 'http://localhost:4200',
     events: {
-      onSDKClose: documentId => {
+      onSDKClose: (documentId, redirect, signProfile) => {
         console.log('Este es el documento', documentId);
+        console.log('Participantes del documento', signProfile);
       },
       onSDKReady: () => {},
       onSDKToken: () => {
@@ -30,16 +31,17 @@ function getConfig(files) {
     },
     env: 'DEV',
     sdkData: {
+      userAttributes: {
+        email: 'email@auco.ai',
+      },
       flowData: {
         type: 'complete',
         files: files,
         emailData: {
-          name: 'Prueba precargar flujo',
+          name: 'Prueba precargar flujo con notificationOff',
           message: 'Mensaje',
           subject: 'Sujeto',
-          expire: new Date(),
           notificationOff: true,
-          remember: '48',
         },
         platform: 'auco',
         validations: {
