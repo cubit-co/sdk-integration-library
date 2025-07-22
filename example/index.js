@@ -8,7 +8,6 @@ async function getFile(path) {
     type: 'application/pdf',
   };
   const file = new File([blob], 'file.pdf', metadata);
-  console.log('FILE::::', file);
   return file;
 }
 
@@ -36,10 +35,16 @@ function getConfig(files) {
     env: 'DEV',
     sdkData: {
       flowData: {
+        type: 'complete',
         files: files,
-        name: 'Prueba precargar flujo',
-        message: 'Mensaje',
-        subject: 'Sujeto',
+        emailData: {
+          name: 'Prueba precargar flujo',
+          message: 'Mensaje',
+          subject: 'Sujeto',
+          expire: new Date(),
+          notificationOff: true,
+          remember: '48',
+        },
         platform: 'auco',
         validations: {
           flow: false,
@@ -70,13 +75,10 @@ function getConfig(files) {
           },
           {
             id: 'id3',
-            type: 'approver',
-            country: 'CO',
-            email: 'santiago@auco.ai',
-            identification: '1115448153',
-            identificationType: 'CC',
-            name: 'Aprobador',
-            phone: '+573161979572',
+            type: 'reader',
+            email: 'lector@auco.ai',
+            name: 'Lector',
+            locked: true,
           },
         ],
       },

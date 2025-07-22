@@ -48,28 +48,63 @@ interface userAttributes {
   country?: string;
 }
 
-interface ParticipantAttributes extends userAttributes {
+interface BaseParticipantAttributes extends userAttributes {
   type: 'signer' | 'approver' | 'reader';
   id: string;
+  locked?: boolean;
 }
-interface SDKUploadData {
-  userAttributes?: userAttributes;
-  users?: userAttributes[];
-  flowData?: {
-    platform: 'whatsapp' | 'auco';
-    validations: {
-      otpCode?: 'phone' | 'email';
-      selfie: boolean;
-      identification: boolean;
-      identificationCardBack: boolean;
-      flow: boolean;
-    };
-    participants: ParticipantAttributes[];
+
+interface SignerAttributes extends BaseParticipantAttributes {
+  type: 'signer' | 'approver';
+  otpCode?: boolean;
+  camera?: boolean;
+  video?: boolean;
+  options?: {
+    camera?: string;
+    whatsapp?: boolean;
+    flow?: boolean;
+  };
+}
+
+interface ReaderAttributes
+  extends Pick<
+    BaseParticipantAttributes,
+    'name' | 'email' | 'id' | 'type' | 'locked'
+  > {
+  type: 'reader';
+}
+
+interface IFullFlowData {
+  type: 'complete';
+  participants: (SignerAttributes | ReaderAttributes)[];
+  files: File[];
+  platform: 'whatsapp' | 'auco';
+  validations: {
+    otpCode?: 'phone' | 'email';
+    selfie: boolean;
+    identification: boolean;
+    identificationCardBack: boolean;
+    flow: boolean;
+  };
+  emailData: {
     name: string;
     message: string;
     subject: string;
-    files: File[];
+    expire?: Date;
+    remember?: '3' | '6' | '12' | '24' | '48';
+    notificationOff?: boolean;
   };
+}
+
+interface IFlowDataOnlyParticipants {
+  type: 'participants';
+  participants: (SignerAttributes | ReaderAttributes)[];
+}
+
+export interface SDKUploadData {
+  userAttributes?: userAttributes;
+  users?: (SignerAttributes | ReaderAttributes)[];
+  flowData?: IFullFlowData | IFlowDataOnlyParticipants;
   uxOptions: {
     primaryColor: string;
     alternateColor: string;
