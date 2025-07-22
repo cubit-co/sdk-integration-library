@@ -16,7 +16,7 @@ function getConfig(files) {
   const config = {
     iframeId: 'myIframe',
     sdkType: 'upload',
-    keyPublic: 'prk_e1cd6a01ecdb4b4ea72ec118e33b18de',
+    keyPublic: '',
     language: 'es',
     customOrigin: 'http://localhost:4200',
     events: {
@@ -32,7 +32,7 @@ function getConfig(files) {
     env: 'DEV',
     sdkData: {
       userAttributes: {
-        email: 'evelyn@auco.ai',
+        email: 'email@auco.ai',
       },
       flowData: {
         type: 'complete',
