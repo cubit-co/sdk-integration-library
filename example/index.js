@@ -16,7 +16,7 @@ function getConfig(files) {
   const config = {
     iframeId: 'myIframe',
     sdkType: 'upload',
-    keyPublic: '',
+    keyPublic: 'prk_e1cd6a01ecdb4b4ea72ec118e33b18de',
     language: 'es',
     customOrigin: 'http://localhost:4200',
     events: {
@@ -28,27 +28,29 @@ function getConfig(files) {
       onSDKToken: () => {
         return new Promise(resolve => resolve(''));
       },
+      onSDKBack: () => {
+        window.location.reload();
+      },
     },
     env: 'DEV',
     sdkData: {
       userAttributes: {
-        email: 'email@auco.ai',
+        email: 'evelyn@auco.ai',
       },
       flowData: {
         type: 'complete',
-        files: files,
+        files,
         emailData: {
-          name: 'Prueba precargar flujo con notificationOff',
-          message: 'Mensaje',
-          subject: 'Sujeto',
-          notificationOff: true,
+          message: '',
+          name: '',
+          subject: '',
         },
         platform: 'auco',
         validations: {
           flow: false,
-          identification: true,
-          identificationCardBack: true,
-          selfie: true,
+          identification: false,
+          identificationCardBack: false,
+          selfie: false,
         },
         participants: [
           {

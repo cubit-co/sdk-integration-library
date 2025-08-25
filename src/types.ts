@@ -14,6 +14,7 @@ export type SDKTypeObjectKeys = {
 };
 export type SDKEvents = {
   onSDKReady: () => void;
+  onSDKBack?: () => void;
   onSDKClose: (documentId?: string, redirectTo?: string) => void;
   onSDKToken?: () => Promise<string>;
   onSDKPay?: (data: {
