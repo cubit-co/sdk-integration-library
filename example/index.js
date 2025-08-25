@@ -18,7 +18,7 @@ function getConfig(files) {
     sdkType: 'upload',
     keyPublic: '',
     language: 'es',
-    customOrigin: 'http://localhost:4200',
+    //customOrigin: 'http://localhost:4200',
     events: {
       onSDKClose: (documentId, redirect, signProfile) => {
         console.log('Este es el documento', documentId);
@@ -28,6 +28,9 @@ function getConfig(files) {
       onSDKToken: () => {
         return new Promise(resolve => resolve(''));
       },
+      onSDKBack: () => {
+        window.location.reload();
+      },
     },
     env: 'DEV',
     sdkData: {
@@ -36,19 +39,18 @@ function getConfig(files) {
       },
       flowData: {
         type: 'complete',
-        files: files,
+        files,
         emailData: {
-          name: 'Prueba precargar flujo con notificationOff',
-          message: 'Mensaje',
-          subject: 'Sujeto',
-          notificationOff: true,
+          message: '',
+          name: '',
+          subject: '',
         },
         platform: 'auco',
         validations: {
           flow: false,
-          identification: true,
-          identificationCardBack: true,
-          selfie: true,
+          identification: false,
+          identificationCardBack: false,
+          selfie: false,
         },
         participants: [
           {

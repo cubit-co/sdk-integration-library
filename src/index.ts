@@ -102,6 +102,13 @@ const setupEvents = (params: Config) => {
       if (event.data?.status !== 'PENDING')
         window.removeEventListener('message', onMessage);
     }
+
+    if (event.data?.type === 'SDK-BACK') {
+      if (events.onSDKBack) {
+        await events.onSDKBack();
+        window.removeEventListener('message', onMessage);
+      }
+    }
   }
   window.addEventListener('message', onMessage);
   iframe.src = origin + '?id=' + uuid();
