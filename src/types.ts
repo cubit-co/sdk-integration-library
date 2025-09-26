@@ -97,6 +97,29 @@ interface IFullFlowData {
   };
 }
 
+interface IEditFlowData {
+  type: 'edit';
+  code: string;
+  participants?: (SignerAttributes | ReaderAttributes)[];
+  files?: File[];
+  platform?: 'whatsapp' | 'auco';
+  validations?: {
+    otpCode?: 'phone' | 'email';
+    selfie: boolean;
+    identification: boolean;
+    identificationCardBack: boolean;
+    flow: boolean;
+  };
+  emailData?: {
+    name: string;
+    message: string;
+    subject: string;
+    expire?: Date;
+    remember?: '3' | '6' | '12' | '24' | '48';
+    notificationOff?: boolean;
+  };
+}
+
 interface IFlowDataOnlyParticipants {
   type: 'participants';
   participants: (SignerAttributes | ReaderAttributes)[];
@@ -105,7 +128,7 @@ interface IFlowDataOnlyParticipants {
 export interface SDKUploadData {
   userAttributes?: userAttributes;
   users?: (SignerAttributes | ReaderAttributes)[];
-  flowData?: IFullFlowData | IFlowDataOnlyParticipants;
+  flowData?: IFullFlowData | IFlowDataOnlyParticipants | IEditFlowData;
   uxOptions: {
     primaryColor: string;
     alternateColor: string;
