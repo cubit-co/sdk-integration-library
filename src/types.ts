@@ -7,7 +7,8 @@ export type SDKs =
   | 'validation'
   | 'sign'
   | 'list-validation'
-  | 'fill';
+  | 'fill'
+  | 'aucoflow';
 export type EnvType = 'DEV' | 'PROD';
 export type SDKTypeObjectKeys = {
   [x in SDKs]: string;
@@ -276,6 +277,18 @@ interface SDKFill extends BaseConfig {
   };
 }
 
+interface SDKAucoflow extends Omit<BaseConfig, 'events'> {
+  sdkType: 'aucoflow';
+  events: Pick<BaseConfig['events'], 'onSDKClose' | 'onSDKReady'>;
+  sdkData: {
+    flowId: string;
+    uxOptions: {
+      primaryColor: string;
+      alternateColor: string;
+    };
+  };
+}
+
 export type Config =
   | SDKUpload
   | SDKRead
@@ -284,5 +297,6 @@ export type Config =
   | SDKSign
   | SDKValidation
   | SDKListValidation
-  | SDKFill;
+  | SDKFill
+  | SDKAucoflow;
 export type TAucoSDK = (params: Config) => () => void;
