@@ -277,9 +277,8 @@ interface SDKFill extends BaseConfig {
   };
 }
 
-interface SDKAucoflow extends Omit<BaseConfig, 'events'> {
+interface SDKAucoflow extends BaseConfig {
   sdkType: 'aucoflow';
-  events: Pick<BaseConfig['events'], 'onSDKClose' | 'onSDKReady'>;
   sdkData: {
     flowId: string;
     uxOptions: {
