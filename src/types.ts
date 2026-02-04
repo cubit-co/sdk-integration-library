@@ -100,6 +100,7 @@ interface IFullFlowData {
 interface IEditFlowData {
   type: 'edit';
   code: string;
+  keepPositions?: boolean;
   participants?: (SignerAttributes | ReaderAttributes)[];
   files?: File[];
   platform?: 'whatsapp' | 'auco';
