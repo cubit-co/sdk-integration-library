@@ -103,6 +103,13 @@ const setupEvents = (params: Config) => {
         window.removeEventListener('message', onMessage);
     }
 
+    if (event.data?.type === 'SDK-FINISH') {
+      if (events.onSDKFinish) {
+        await events.onSDKFinish();
+        window.removeEventListener('message', onMessage);
+      }
+    }
+
     if (event.data?.type === 'SDK-BACK') {
       if (events.onSDKBack) {
         await events.onSDKBack();
