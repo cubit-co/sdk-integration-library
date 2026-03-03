@@ -61,6 +61,7 @@ interface SignerAttributes extends BaseParticipantAttributes {
   otpCode?: boolean;
   camera?: boolean;
   video?: boolean;
+  disableAutoSign?: boolean;
   options?: {
     camera?: string;
     whatsapp?: boolean;
