@@ -1,6 +1,7 @@
 export type Languages = 'es' | 'en';
 export type SDKs =
   | 'upload'
+  | 'upload-v2'
   | 'read'
   | 'attachments'
   | 'validation-attachments'
@@ -34,6 +35,7 @@ export type SDKEvents = {
 };
 interface BaseConfig {
   keyPublic?: string;
+  keyPrivate?: string;
   country?: string;
   iframeId: string;
   language: Languages;
@@ -161,6 +163,11 @@ interface SDKUpload extends Omit<BaseConfig, 'events'> {
   };
 }
 
+interface SDKUploadV2 extends BaseConfig {
+  sdkType: 'upload-v2';
+  sdkData: SDKUploadData;
+}
+
 interface SDKAttachments extends Omit<BaseConfig, 'events'> {
   /**
    * Create an attachment flow with signers. You could not add approvers.
@@ -280,6 +287,7 @@ interface SDKFill extends BaseConfig {
 
 export type Config =
   | SDKUpload
+  | SDKUploadV2
   | SDKRead
   | SDKAttachments
   | SDKValidationAttachments

@@ -30,6 +30,7 @@ const setupEvents = (params: Config) => {
     language,
     sdkData,
     keyPublic = undefined,
+    keyPrivate = undefined,
     customOrigin,
     sdkType,
     env,
@@ -55,6 +56,14 @@ const setupEvents = (params: Config) => {
     throw new Error('Could not start SDK, invalid keyPublic');
   }
 
+  if (keyPrivate && keyPrivate.length != 36 && !events.onSDKToken) {
+    throw new Error('Could not start SDK, onSDKToken is missing');
+  }
+
+  if (keyPrivate && keyPrivate.length != 36) {
+    throw new Error('Could not start SDK, invalid keyPrivate');
+  }
+
   async function onMessage(event: MessageEvent) {
     if (event.origin !== origin) return;
     if (event.data.ready) {
@@ -63,6 +72,7 @@ const setupEvents = (params: Config) => {
           language,
           ...sdkData,
           keyPublic,
+          keyPrivate,
           sdkParentURL: window.location.href,
           ...getExtraConstants(sdkType),
         },
@@ -123,6 +133,7 @@ const setupEvents = (params: Config) => {
 };
 const getSDKURL: SDKTypeObjectKeys = {
   upload: 'https://upload.auco.ai',
+  'upload-v2': 'https://upload-v2.auco.ai',
   sign: 'https://sign.auco.ai',
   attachments: 'https://upload.auco.ai',
   read: 'https://upload.auco.ai',
@@ -133,6 +144,7 @@ const getSDKURL: SDKTypeObjectKeys = {
 };
 const getDevSDKURL: SDKTypeObjectKeys = {
   upload: 'https://upload-stage.auco.ai',
+  'upload-v2': 'https://upload-stage.auco.ai',
   sign: 'https://sign-stage.auco.ai',
   attachments: 'https://upload-stage.auco.ai',
   read: 'https://upload-stage.auco.ai',
