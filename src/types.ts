@@ -132,6 +132,7 @@ export interface SDKUploadData {
   userAttributes?: userAttributes;
   users?: (SignerAttributes | ReaderAttributes)[];
   flowData?: IFullFlowData | IFlowDataOnlyParticipants | IEditFlowData;
+  custom?: Record<string, unknown>;
   uxOptions: {
     primaryColor: string;
     alternateColor: string;

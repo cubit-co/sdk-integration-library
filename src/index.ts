@@ -22,6 +22,25 @@ const parametersValidation = (params: Config) => {
       "Could not start SDK, language is missing or invalid, available options are 'es' and 'en' "
     );
   }
+  if (params.sdkType === 'upload' || params.sdkType === 'attachments') {
+    if (params.sdkData.custom) {
+      if (
+        typeof params.sdkData.custom !== 'object' ||
+        Array.isArray(params.sdkData.custom)
+      )
+        throw new Error(
+          'Could not start SDK, custom data must be an object, received: ' +
+            (Array.isArray(params.sdkData.custom)
+              ? 'array'
+              : typeof params.sdkData.custom)
+        );
+      else if (!Object.keys(params.sdkData.custom).length)
+        throw new Error(
+          'Could not start SDK, custom data is empty, received: ' +
+            JSON.stringify(params.sdkData.custom)
+        );
+    }
+  }
 };
 const setupEvents = (params: Config) => {
   const {
