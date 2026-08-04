@@ -64,11 +64,11 @@ const setupEvents = (params: Config) => {
     );
   }
 
-  if (keyPublic && keyPublic.length != 36 && !events.onSDKToken) {
+  if (keyPublic && keyPublic.length !== 36 && !events.onSDKToken) {
     throw new Error('Could not start SDK, onSDKToken is missing');
   }
 
-  if (keyPublic && keyPublic.length != 36) {
+  if (keyPublic && keyPublic.length !== 36) {
     throw new Error('Could not start SDK, invalid keyPublic');
   }
 
