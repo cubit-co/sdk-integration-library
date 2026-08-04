@@ -211,6 +211,11 @@ interface SDKSign extends BaseConfig {
     };
     signFlow?: 'document' | 'approve' | 'package' | 'read';
     /**
+     * Remove "Your invitation" badge when user has multiple pending documents
+     * assumes user didn't open a specific document, and is opening the sign flow from a list of pending documents
+     */
+    isFromDashboard?: boolean;
+    /**
      * email is needed on read functionality when user is logged in
      */
     email?: string;
