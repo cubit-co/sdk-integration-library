@@ -1,4 +1,4 @@
-import { TAucoSDK, Config, SDKTypeObjectKeys, SDKs } from './types';
+import { TAucoSDK, Config, SDKTypeObjectKeys, SDKs, EnvType } from './types';
 function uuid() {
   const d = new Date();
   const s = d.toISOString().replaceAll(':', '-');
@@ -53,11 +53,9 @@ const setupEvents = (params: Config) => {
     sdkType,
     env,
   } = params;
-  const origin = customOrigin
-    ? customOrigin
-    : env == 'DEV'
-    ? getDevSDKURL[sdkType]
-    : getSDKURL[sdkType];
+
+  const origin = resolveOrigin(sdkType, env, keyPublic, customOrigin);
+
   const iframe = document.getElementById(iframeId) as HTMLIFrameElement;
 
   if (!iframe) {
@@ -66,11 +64,11 @@ const setupEvents = (params: Config) => {
     );
   }
 
-  if (keyPublic && keyPublic.length != 36 && !events.onSDKToken) {
+  if (keyPublic && keyPublic.length !== 36 && !events.onSDKToken) {
     throw new Error('Could not start SDK, onSDKToken is missing');
   }
 
-  if (keyPublic && keyPublic.length != 36) {
+  if (keyPublic && keyPublic.length !== 36) {
     throw new Error('Could not start SDK, invalid keyPublic');
   }
 
@@ -150,6 +148,7 @@ const getSDKURL: SDKTypeObjectKeys = {
   'list-validation': '',
   fill: 'https://fill2.auco.ai',
 };
+
 const getDevSDKURL: SDKTypeObjectKeys = {
   upload: 'https://upload-stage.auco.ai',
   sign: 'https://sign-stage.auco.ai',
@@ -159,6 +158,34 @@ const getDevSDKURL: SDKTypeObjectKeys = {
   validation: 'https://veriface-stage.auco.ai',
   'list-validation': '',
   fill: 'https://fill2-stage.auco.ai',
+};
+
+const internalSDKDevURL: SDKTypeObjectKeys = {
+  validation: 'https://veriface-dev.auco.ai',
+  sign: 'https://sign-dev.auco.ai',
+  upload: 'https://upload-dev.auco.ai',
+  attachments: 'https://upload-dev.auco.ai',
+  read: 'https://upload-dev.auco.ai',
+  'validation-attachments': 'https://upload-dev.auco.ai',
+  'list-validation': '',
+  fill: 'https://fill2-stage.auco.ai',
+};
+
+const resolveOrigin = (
+  sdkType: SDKs,
+  env: EnvType,
+  keyPublic?: string,
+  customOrigin?: string
+) => {
+  if (customOrigin && customOrigin.length > 0) return customOrigin;
+  /**
+   * No keyPublic means the caller is an Auco app authenticating through
+   * onSDKToken, and the dev environment is only reachable by those callers.
+   * External consumers asking for DEV or STAGE land on stage instead.
+   */
+  if (env === 'DEV' && !keyPublic) return internalSDKDevURL[sdkType];
+  if (env === 'DEV' || env === 'STAGE') return getDevSDKURL[sdkType];
+  return getSDKURL[sdkType];
 };
 
 const flowTypesUploadSDK = {
