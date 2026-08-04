@@ -8,7 +8,7 @@ export type SDKs =
   | 'sign'
   | 'list-validation'
   | 'fill';
-export type EnvType = 'DEV' | 'PROD';
+export type EnvType = 'DEV' | 'STAGE' | 'PROD';
 export type SDKTypeObjectKeys = {
   [x in SDKs]: string;
 };
