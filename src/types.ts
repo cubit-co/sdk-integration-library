@@ -1,6 +1,7 @@
 export type Languages = 'es' | 'en';
 export type SDKs =
   | 'upload'
+  | 'upload-v2'
   | 'read'
   | 'attachments'
   | 'validation-attachments'
@@ -34,6 +35,7 @@ export type SDKEvents = {
 };
 interface BaseConfig {
   keyPublic?: string;
+  keyPrivate?: string;
   country?: string;
   iframeId: string;
   language: Languages;
@@ -149,6 +151,23 @@ interface SDKUpload extends Omit<BaseConfig, 'events'> {
    */
   sdkType: 'upload';
   sdkData: SDKUploadData;
+  events: Omit<BaseConfig['events'], 'onSDKClose'> & {
+    onSDKClose: (
+      documentId?: string,
+      redirectTo?: string,
+      signProfile?: Array<{
+        id: string;
+        name: string;
+        email: string;
+        phone: string;
+      }>
+    ) => void;
+  };
+}
+
+interface SDKUploadV2 extends Omit<BaseConfig, 'events'> {
+  sdkType: 'upload-v2';
+  sdkData: Omit<SDKUploadData, 'flowData'>;
   events: Omit<BaseConfig['events'], 'onSDKClose'> & {
     onSDKClose: (
       documentId?: string,
@@ -287,6 +306,7 @@ interface SDKFill extends BaseConfig {
 
 export type Config =
   | SDKUpload
+  | SDKUploadV2
   | SDKRead
   | SDKAttachments
   | SDKValidationAttachments
