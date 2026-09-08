@@ -139,7 +139,7 @@ const setupEvents = (params: Config) => {
   return onMessage;
 };
 const getSDKURL: SDKTypeObjectKeys = {
-  'upload-v2': '',
+  'upload-v2': 'https://uploadv2.auco.ai',
   upload: 'https://upload.auco.ai',
   sign: 'https://sign.auco.ai',
   attachments: 'https://upload.auco.ai',
@@ -151,7 +151,7 @@ const getSDKURL: SDKTypeObjectKeys = {
 };
 
 const getDevSDKURL: SDKTypeObjectKeys = {
-  'upload-v2': '',
+  'upload-v2': 'https://uploadv2-stage.auco.ai',
   upload: 'https://upload-stage.auco.ai',
   sign: 'https://sign-stage.auco.ai',
   attachments: 'https://upload-stage.auco.ai',
